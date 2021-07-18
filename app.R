@@ -1,12 +1,13 @@
 library(shiny)
 
-ui <- fluidPage(
-  h2("Testee"),
-  tags$div()
+source("./components/route.R")
+
+ui <- bootstrapPage(
+  div(router$ui)
 )
 
 server <- function(input, output, session) {
-  
+  router$server(input, output, session)
 }
 
 shinyApp(ui, server)

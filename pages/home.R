@@ -2,6 +2,7 @@ library(shiny)
 library(bslib)
 
 source("./pages/about.R")
+source("./pages/home_content.R")
 
 new_media <- "
 
@@ -40,7 +41,18 @@ new_media <- "
     .navbar .navbar-nav {float: right}
     .navbar .navbar-header {float: left}
     .navbar-brand { float: left; padding-left: 30px;  }
-}"
+}
+
+.content-home{
+width: 100%
+}
+
+.map-div{
+  width: 60%;
+  margin-left: 30px
+}
+
+"
 
 
 home_page <- fluidPage(
@@ -54,13 +66,15 @@ home_page <- fluidPage(
       navbarPage(
         inverse = T,
         title = "Violencia Decorrente de\n Intervenção Policial - SP", 
-        tabPanel(title = "Mapa Interativo"),
+        tabPanel(title = "Mapa Interativo", home_content),
         tabPanel(title = "Estatisticas"),
         tabPanel(title = "Modelagem Preditiva"),
         tabPanel(title = "Sobre", about_page),
         tags$style(HTML(new_media))
       ),
-      
-    )
+ 
+   )
+  
+
   
 

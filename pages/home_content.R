@@ -71,34 +71,29 @@ background-color: #454c57;
    border-radius: 25px;
 }
 
-.side-content{
-margin-left: 15px;
-margin-right: 15px;
-width: 45%;
- height: calc(100vh - 69px - 20px);
-
+div.outer {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  padding: 0;
 }
 
 
-.map-filters{
-border-radius: 25px;
-background-color: #ededed;
-height: 70%
-}
-
-.filter-title{
-width: 100%;
-text-align: center;
-padding-top: 7px;
-}
 
 @media (max-width: 768px) {
-.map-div{
-height: calc(100vh - 266px - 20px);
+div.outer {
+  position: fixed;
+  top: 245px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  padding: 0;
 }
-.side-content{
-height: calc(100vh - 266px - 20px);
-}
+
 
 .content-home{
 flex-direction: column;
@@ -107,8 +102,14 @@ display: flex;
 }
 
 @media (min-width: 769px) and (max-width: 956px) {
-.map-div{
-height: calc(100vh - 121px - 20px);
+div.outer {
+  position: fixed;
+  top: 100px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  padding: 0;
 }
 .side-content{
 height: calc(100vh - 121px - 20px);
@@ -132,6 +133,19 @@ hr.solid {
 
 
 
+#controls:hover {
+  opacity: 0.95;
+  transition-delay: 0;
+}
+
+
+#controls {
+  background-color: white;
+  padding: 0 20px 20px 20px;
+  
+  opacity: 0.65;
+  transition: opacity 300ms 200ms;
+}
 
 "
 
@@ -141,27 +155,24 @@ home_content <- div(
   tags$head(
     tags$style(HTML(new_media_content))
   ),
-  div(
-    class="content-home",
-    div(
-      class='map-div',
-        
-        leafletOutput("statemap", height = "100%")
-      
-    ),
-    div(
-      class='side-content',
-      div(
-        class='map-filters',
-        div(class="filter-title", h4('Filtros do Mapa'), hr(class='solid')),
-        div(class='filter-component', sliderInput("mapyear", "Ano", min = 2013, max = 2021, value=c(2019, 2021), sep="", dragRange = T, ticks=F, width = "100%"))
-        
-      )
+
+    div(class='outer', 
+        leafletOutput("statemap", height = "100%", ),
+        absolutePanel(id = "controls", class = "panel panel-default", fixed = TRUE,
+                                     draggable = T, top = 290, left = "auto", right = 20, bottom = "auto",
+                                     width = 340, height = "auto",
+                                     h4('Filtros do Mapa'), hr(class='solid'),
+                                     radioButtons("mapgroupment", "Granularidade da Visualização", c("Dados por Municipio" = "mun", "Pontos no Mapa" = "point")),
+                                     sliderInput("mapyear", "Ano", animate=animationOptions(interval = 2000, loop = TRUE), min = 2013, max = 2021, value=c(2019, 2021), sep="", dragRange = T, ticks=F, width = "100%"),
+                      radioButtons("corgroupment", "Cor e Raça", c("Todos" = "all", "Pretos e Pardos" = "pp", "Brancos e Amarelos"= "ba", "Não Informado" = 'nf')),
+    ))
+    ,
+    
     )
-  )
+
   
   
 
-)
+
 
 

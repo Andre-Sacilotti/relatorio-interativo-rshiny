@@ -3,7 +3,7 @@ library(plotly)
 
 
 predictive_page <- div(
-  titlePanel("Modelagem Preditiva"),
+  titlePanel("Tabela de Dados"),
 
   
 

@@ -1,11 +1,108 @@
 library(shiny)
 
 
-statistics_page <- div(
+css_content = "
+.checks {
+padding-left: 20px;
+color: black;
+border: 25px;
+padding-top: 10px;
+padding-bottom: 10px;
+}
+
+body{
+background-color: white;
+heigth: 100vh
+}
+
+hr.solid {
+  border-top: 3px solid #bbb;
+}
+
+.sta-content{
+background-color: #454545;
+height: 120px;
+border-radius: 25px;
+padding-top: 10px;
+color:white;
+}
+
+.number{
+color: white;
+font-size: 18px;
+font-weigth: 700;
+padding-top: 15px;
+display: flex;
+flex-direction: row;
+width: 100%;
+justify-content: center;
+  align-items: center;
+}
+"
+
+statistics_page <- div(class='statistica-page',
   
-  titlePanel(
-    div(h2("Estatisticas", style='color:white', align='center'), tags$br())),
+  tags$head(
+    tags$style(HTML(css_content))
+  ),
   
-  p("Serie Temporal de Vitimas da Violencia Policial", style="color:white", align='center'),
+  #titlePanel(
+  #  div(h2("Estatisticas", style='color:black', align='center'), tags$br())),
+  
+  h4("Serie Temporal de Vitimas da Violencia Policial", style="color:black", align='center'),
+  fluidRow(
+    
+    column(10, plotlyOutput('timeseries_statistics'), offset=1)
+  ),
+  tags$br(),
+  tags$hr(class='solid'),
+  tags$br(),
+  h4("Medidas Resumo da Serie Historicas de Vitimas", style="color:black", align='center'),
+  fluidRow(align='center',
+    column(2, offset=2, align='center', div(class='sta-content', "Média de Vitimas por Ano", tags$br(), div(class='number', textOutput('vit_ano'), " ± ", textOutput('std_ano')))),
+    column(2, offset=1, align='center', div(class='sta-content', "Média de Vitimas por Mes", tags$br(), div(class='number', textOutput('vit_mes'), " ± ", textOutput('std_mes')))),
+    column(2, offset=1, align='center', div(class='sta-content', "Média de Vitimas por Dia", tags$br(), div(class='number', textOutput('vit_dia'), " ± ", textOutput('std_dia')))),
+  ),
+  
+  tags$br(),
+  tags$hr(class='solid'),
+  tags$br(),
+  
+  h4("Relação entre Cor/Raça das Vitimas de Violencia Policial a Cada Ano", style="color:black", align='center'),
+  fluidRow(
+    
+    column(10, plotOutput('rel_cor_vio'), offset=1)
+  ),
+  
+  tags$br(),
+  tags$hr(class='solid'),
+  tags$br(),
+  
+  h4("Distribuição do Horario de Ocorrencia da Violencia Policial", style="color:black", align='center'),
+  fluidRow(
+    
+    column(10, plotlyOutput('dist_hour_violence'), offset=1)
+  ),
+  
+  tags$br(),
+  tags$hr(class='solid'),
+  tags$br(),
+  
+  h4("Coorporações Policiais Mais Violentas", style="color:black", align='center'),
+  fluidRow(
+    
+    column(10, plotlyOutput('bar_copr_vio'), offset=1)
+  ),
+  
+  tags$br(),
+  tags$hr(class='solid'),
+  tags$br(),
+  
+  h4("Boxplot da Idade das Vitimas ao Longo dos Anos", style="color:black", align='center'),
+  fluidRow(
+    
+    column(10, plotOutput('boxplot_idade'), offset=1)
+  ),
+
 
 )

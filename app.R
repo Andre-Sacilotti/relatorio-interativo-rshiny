@@ -40,12 +40,131 @@ server <- function(input, output, session) {
   }
   
   
-  output$predictive_timeseries <- renderPlotly({
-    x <- c(1:100)
-    random_y <- rnorm(100, mean = 0)
-    data <- data.frame(x, random_y)
+  
+  
+  
+  output$timeseries_statistics <- renderPlotly({
     
-    fig <- plot_ly(data, x = ~x, y = ~random_y, type = 'scatter', mode = 'lines')
+    fig <- plot_ly(mode='line')
+    
+
+      filtered_timeseries <- df %>% filter(COR=="Branca" | COR=='Amarela')
+      aggregated_freq = aggregate(filtered_timeseries[, 31], list(filtered_timeseries$ANO_BO), length)
+      fig <- fig %>% add_trace(x=aggregated_freq$Group.1, y=aggregated_freq$x, name='Brancos e Amarelos')
+    
+
+      filtered_timeseries <- df %>% filter(COR=="Preta" | COR=='Parda')
+      aggregated_freq = aggregate(filtered_timeseries[, 31], list(filtered_timeseries$ANO_BO), length)
+      fig <- fig %>% add_trace(x=aggregated_freq$Group.1, y=aggregated_freq$x, name='Pretos e Pardos')
+
+
+      filtered_timeseries <- df %>% filter(COR=="NÃO INFORMADO" | COR=='Ignorada' | COR=='Outros')
+      aggregated_freq = aggregate(filtered_timeseries[, 31], list(filtered_timeseries$ANO_BO), length)
+      fig <- fig %>% add_trace(x=aggregated_freq$Group.1, y=aggregated_freq$x, name="Não Informaados")
+    
+    
+    
+    fig <- fig %>% layout(
+      xaxis=list(title="Anos"),
+      yaxis=list(title="Vitimas")
+    )
+    
+  })
+  
+  output$rel_cor_vio <- renderPlot({
+    
+    fig <- plot_ly(mode='bar')
+    
+    label <- c()
+    label2 <- c()
+    label3 <- c()
+    
+    filtered_timeseries <- df %>% filter(COR=="Branca" | COR=='Amarela')
+    aggregated_freq_1 = aggregate(filtered_timeseries[, 31], list(filtered_timeseries$ANO_BO), length)
+    
+    for (i in aggregated_freq_1$Group.1){
+      label <- c(label, "Brancos e Amarelos")
+    }
+    
+    data1 <- data.frame(ano=aggregated_freq_1$Group.1, freq=aggregated_freq_1$x, cor=label)
+
+    
+    filtered_timeseries <- df %>% filter(COR=="Preta" | COR=='Parda')
+    aggregated_freq_2 = aggregate(filtered_timeseries[, 31], list(filtered_timeseries$ANO_BO), length)
+    
+    for (i in aggregated_freq_2$Group.1){
+      label2 <- c(label2, "Pretos e Pardos")
+    }
+    
+    data2 <- data.frame(ano=aggregated_freq_2$Group.1, freq=aggregated_freq_2$x, cor=label2)
+    
+    filtered_timeseries <- df %>% filter(COR=="NÃO INFORMADO" | COR=='Ignorada' | COR=='Outros')
+    aggregated_freq_3 = aggregate(filtered_timeseries[, 31], list(filtered_timeseries$ANO_BO), length)
+    
+    for (i in aggregated_freq_3$Group.1){
+      label3 <- c(label3, "Não Informado")
+    }
+    
+    data3 <- data.frame(ano=aggregated_freq_3$Group.1, freq=aggregated_freq_3$x, cor=label3)
+    
+    merged <- rbind(data1, data2)
+    merged <- rbind(merged, data3)
+    
+    ggplot(merged, aes(fill=cor, y=freq, x=ano)) + 
+      geom_bar(position="stack", stat="identity") +ylab("Vitimas") + xlab("Ano") + labs(fill = "Cor/Raça")
+
+  })
+  
+  
+  output$bar_copr_vio <- renderPlotly({
+    aggregated_freq_3 = aggregate(df[, 31], list(df$COORPORAÇÃO), length)
+    
+    data_ <- data.frame(Coorporação=aggregated_freq_3$Group.1, Vitimas=aggregated_freq_3$x)
+    
+    ggplot(data_, aes(y=Vitimas, x=Coorporação)) + 
+      geom_bar(position="dodge", stat="identity", width = 0.5) + ylab("Vitimas da Violencia Policial") + xlab("Cooporação Policial")
+  })
+  
+  
+  output$dist_hour_violence <- renderPlotly({
+    filter_nan <- df %>% filter(HORA_FATO != 'NÃO INFORMADO')
+    fig <- plot_ly(
+      filter_nan, x=~as.numeric(HORA_FATO_HOUR_ONLY, rm.na=T), type = "histogram", alpha = 0.6
+    ) %>% layout(xaxis=list(title=""))
+  })
+  
+  output$vit_ano <- renderText({
+    aggregated_freq = aggregate(df[, 31], list(df$ANO_BO), length)
+    print(as.character(round(mean(aggregated_freq$x), digits=1)))
+  })
+  output$vit_mes <- renderText({
+    aggregated_freq = aggregate(df[, 31], list(df$ANO_BO), length)
+    print(as.character(round(mean(aggregated_freq$x)/12, digits=1)))
+  })
+  output$vit_dia <- renderText({
+    aggregated_freq = aggregate(df[, 31], list(df$ANO_BO), length)
+    print(as.character(round(mean(aggregated_freq$x)/365, digits=1)))
+  })
+  
+  output$std_ano <- renderText({
+    aggregated_freq = aggregate(df[, 31], list(df$ANO_BO), length)
+    print(as.character(round(var(aggregated_freq$x)**(1/2), digits=1)))
+  })
+  output$std_mes <- renderText({
+    aggregated_freq = aggregate(df[, 31], list(df$ANO_BO), length)
+    print(as.character(round((var(aggregated_freq$x)**(1/2))/12, digits=1)))
+  })
+  output$std_dia <- renderText({
+    aggregated_freq = aggregate(df[, 31], list(df$ANO_BO), length)
+    print(as.character(round((var(aggregated_freq$x)**(1/2))/365, digits=1)))
+  })
+  
+  
+  output$boxplot_idade <- renderPlot({
+    filter_nan <- df %>% filter(IDADE_PESSOA != 'NÃO INFORMADO')
+    filter_nan$IDADE_PESSOA <- as.factor(filter_nan$IDADE_PESSOA)
+    
+    boxplot(IDADE_PESSOA ~ ANO_BO, data=filter_nan, xlab="Anos", ylab="Idade da Vitima")
     
   })
   

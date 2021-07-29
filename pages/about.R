@@ -6,7 +6,7 @@ css_content <- "
 .our-team {
   padding: 30px 0 40px;
   margin-bottom: 30px;
-  background-color: #f7f5ec;
+  background-color: #d4d4d4;
   text-align: center;
   overflow: hidden;
   position: relative;
@@ -98,9 +98,18 @@ css_content <- "
   text-decoration: none;
 }
 
+.our-team {
+box-shadow: 4px 6px #888888;
+}
+
 .our-team .social li a:hover {
   color: #1369ce;
-  background-color: #f7f5ec;
+  background-color: #d4d4d4;
+}
+
+.texto{
+  padding-left: 80px;
+  padding-right: 80px
 }
 
 "
@@ -111,18 +120,19 @@ about_page <- div(
   
   titlePanel(
     div(
-      h1("Sobre", align = "center", style='color:white'),
+      h1("Sobre", align = "center", style='color:black'),
         tags$br(),
         tags$br(),
-        tags$h5(
+        div(class='texto', tags$h5(
           "Projeto desenvolvido como avaliação para a disciplina SME0803 - Visualização e Exploração de dados,
-          ministrada no ICMC/USP pela incrivel Prof. Dr. Cibele Russo
+          ministrada no ICMC/USP pela incrivel Prof. Dr. Cibele Russo durante o primeiro semestre de 2021.
           ",
-          align = "center", style='color:white'),
-        tags$h5(align = "center", style='color:white', 
+          align = "center", style='color:black'), align='center'),
+        
+        tags$h5(align = "center", style='color:black', 
         div(tags$a( href="https://uspdigital.usp.br/jupiterweb/obterDisciplina?nomdis=&sgldis=SME0803", 'Link da Disciplina SME0803')),
         ),
-        tags$h5(align = "center", style='color:white', 
+        tags$h5(align = "center", style='color:black', 
                 div( tags$a( href="https://br.linkedin.com/in/cibelerusso", 'Linkedin Prof. Dr. Cibele')),
         ),
         tags$br(),

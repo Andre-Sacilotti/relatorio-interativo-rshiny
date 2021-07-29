@@ -161,10 +161,12 @@ home_content <- div(
         absolutePanel(id = "controls", class = "panel panel-default", fixed = TRUE,
                                      draggable = T, top = 290, left = "auto", right = 20, bottom = "auto",
                                      width = 340, height = "auto",
-                                     h4('Filtros do Mapa'), hr(class='solid'),
-                                     radioButtons("mapgroupment", "Granularidade da Visualização", c("Dados por Municipio" = "mun", "Pontos no Mapa" = "point")),
-                                     sliderInput("mapyear", "Ano", animate=animationOptions(interval = 2000, loop = TRUE), min = 2013, max = 2021, value=c(2019, 2021), sep="", dragRange = T, ticks=F, width = "100%"),
+                                     h4('Mapa Interativo'), hr(class='solid'),
+                                     radioButtons("mapgroupment", "Granularidade da Visualização", c("Dados por Municipio" = "mun", "Pontos da Ocorrencia" = "point")),
+                                     sliderInput("mapyear", "Ano", animate=animationOptions(interval = 2000, loop = F), min = 2013, max = 2021, value=c(2019, 2021), sep="", dragRange = T, ticks=F, width = "100%"),
                       radioButtons("corgroupment", "Cor e Raça", c("Todos" = "all", "Pretos e Pardos" = "pp", "Brancos e Amarelos"= "ba", "Não Informado" = 'nf')),
+                      actionButton("filterbtn", "Filtrar")
+                      
     ))
     ,
     

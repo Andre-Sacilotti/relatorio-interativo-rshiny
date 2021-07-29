@@ -3,6 +3,8 @@ library(bslib)
 
 source("./pages/about.R")
 source("./pages/home_content.R")
+source("./pages/predictive.R")
+source("./pages/statistics.R")
 
 new_media <- "
 
@@ -67,8 +69,8 @@ home_page <- fluidPage(
         inverse = T,
         title = "Violencia Decorrente de\n Intervenção Policial - SP", 
         tabPanel(title = "Mapa Interativo", home_content),
-        tabPanel(title = "Estatisticas"),
-        tabPanel(title = "Modelagem Preditiva"),
+        tabPanel(title = "Estatisticas", statistics_page),
+        tabPanel(title = "Tabela", predictive_page),
         tabPanel(title = "Sobre", about_page),
         tags$style(HTML(new_media))
       ),

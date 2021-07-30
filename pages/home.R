@@ -12,20 +12,19 @@ new_media <- "
     .navbar-header .navbar-brand {float: left; text-align: center; width: 100%}
     .navbar-header { width:100% }
 .navbar-brand { width: 100%; text-align: center }
-    
+
 }
 
 .container-fluid {
-    padding-right: 0px; 
-    padding-left: 0px; 
+    padding-right: 0px;
+    padding-left: 0px;
     margin-right: auto;
     margin-left: auto;
 }
 
 .nav
 {
-
-    padding-left: 15px; 
+    padding-left: 15px;
 
 }
 
@@ -58,25 +57,17 @@ width: 100%
 
 
 home_page <- fluidPage(
+  tags$head(tags$style(HTML(new_media))),
   
-  tags$head(
+  
+  navbarPage(
+    inverse = T,
+    title = "Violencia Decorrente de\n Intervenção Policial - SP",
+    tabPanel(title = "Mapa Interativo", home_content),
+    tabPanel(title = "Estatisticas", statistics_page),
+    tabPanel(title = "Tabela", predictive_page),
+    tabPanel(title = "Sobre", about_page),
     tags$style(HTML(new_media))
-    
   ),
-
-      
-      navbarPage(
-        inverse = T,
-        title = "Violencia Decorrente de\n Intervenção Policial - SP", 
-        tabPanel(title = "Mapa Interativo", home_content),
-        tabPanel(title = "Estatisticas", statistics_page),
-        tabPanel(title = "Tabela", predictive_page),
-        tabPanel(title = "Sobre", about_page),
-        tags$style(HTML(new_media))
-      ),
- 
-   )
   
-
-  
-
+)

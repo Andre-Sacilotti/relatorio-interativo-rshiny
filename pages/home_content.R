@@ -14,7 +14,7 @@ background-color: #454c57;
     .navbar-header .navbar-brand {float: left; text-align: center; width: 100%}
     .navbar-header { width:100% }
 .navbar-brand { width: 100%; text-align: center }
-    
+
 }
 
 #statemap {
@@ -27,16 +27,15 @@ border-radius: 25px;
 }
 
 .container-fluid {
-    padding-right: 0px; 
-    padding-left: 0px; 
+    padding-right: 0px;
+    padding-left: 0px;
     margin-right: auto;
     margin-left: auto;
 }
 
 .nav
 {
-
-    padding-left: 15px; 
+    padding-left: 15px;
 
 }
 
@@ -142,7 +141,7 @@ hr.solid {
 #controls {
   background-color: white;
   padding: 0 20px 20px 20px;
-  
+
   opacity: 0.65;
   transition: opacity 300ms 200ms;
 }
@@ -150,31 +149,55 @@ hr.solid {
 "
 
 
-home_content <- div(
-  # Head with styles
-  tags$head(
-    tags$style(HTML(new_media_content))
-  ),
-
-    div(class='outer', 
-        leafletOutput("statemap", height = "100%", ),
-        absolutePanel(id = "controls", class = "panel panel-default", fixed = TRUE,
-                                     draggable = T, top = 290, left = "auto", right = 20, bottom = "auto",
-                                     width = 340, height = "auto",
-                                     h4('Mapa Interativo'), hr(class='solid'),
-                                     radioButtons("mapgroupment", "Granularidade da Visualização", c("Dados por Municipio" = "mun", "Pontos da Ocorrencia" = "point")),
-                                     sliderInput("mapyear", "Ano", animate=animationOptions(interval = 2000, loop = F), min = 2013, max = 2021, value=c(2019, 2021), sep="", dragRange = T, ticks=F, width = "100%"),
-                      radioButtons("corgroupment", "Cor e Raça", c("Todos" = "all", "Pretos e Pardos" = "pp", "Brancos e Amarelos"= "ba", "Não Informado" = 'nf')),
-                      actionButton("filterbtn", "Filtrar")
-                      
-    ))
-    ,
-    
+home_content <- div( # Head with styles
+  tags$head(tags$style(HTML(new_media_content))),
+  div(
+    class = "outer",
+    leafletOutput("statemap", height = "100%", ),
+    absolutePanel(
+      id = "controls",
+      class = "panel panel-default",
+      fixed = TRUE,
+      draggable = T,
+      top = 290,
+      left = "auto",
+      right = 20,
+      bottom = "auto",
+      width = 340,
+      height = "auto",
+      h4("Mapa Interativo"),
+      hr(class = "solid"),
+      radioButtons(
+        "mapgroupment",
+        "Granularidade da Visualização",
+        c(
+          "Dados por Municipio" = "mun",
+          "Pontos da Ocorrencia" = "point"
+        )
+      ),
+      sliderInput(
+        "mapyear",
+        "Ano",
+        animate = animationOptions(interval = 2000, loop = F),
+        min = 2013,
+        max = 2021,
+        value = c(2019, 2021),
+        sep = "",
+        dragRange = T,
+        ticks = F,
+        width = "100%"
+      ),
+      radioButtons(
+        "corgroupment",
+        "Cor e Raça",
+        c(
+          "Todos" = "all",
+          "Pretos e Pardos" = "pp",
+          "Brancos e Amarelos" = "ba",
+          "Não Informado" = "nf"
+        )
+      ),
+      actionButton("filterbtn", "Filtrar")
     )
-
-  
-  
-
-
-
-
+  ),
+)

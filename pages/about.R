@@ -114,70 +114,79 @@ box-shadow: 4px 6px #888888;
 
 "
 
-about_page <- div(
-  
-  tags$head(tags$style(HTML(css_content))),
-  
-  titlePanel(
-    div(
-      h1("Sobre", align = "center", style='color:black'),
-        tags$br(),
-        tags$br(),
-        div(class='texto', tags$h5(
-          "Projeto desenvolvido como avaliação para a disciplina SME0803 - Visualização e Exploração de dados,
+about_page <- div(tags$head(tags$style(HTML(css_content))),
+                  
+                  titlePanel(
+                    div(
+                      h1("Sobre", align = "center", style = 'color:black'),
+                      tags$br(),
+                      tags$br(),
+                      div(
+                        class = 'texto',
+                        tags$h5(
+                          "Projeto desenvolvido como avaliação para a disciplina SME0803 - Visualização e Exploração de dados,
           ministrada no ICMC/USP pela incrivel Prof. Dr. Cibele Russo durante o primeiro semestre de 2021.
           ",
-          align = "center", style='color:black'), align='center'),
-        
-        tags$h5(align = "center", style='color:black', 
-        div(tags$a( href="https://uspdigital.usp.br/jupiterweb/obterDisciplina?nomdis=&sgldis=SME0803", 'Link da Disciplina SME0803')),
-        ),
-        tags$h5(align = "center", style='color:black', 
-                div( tags$a( href="https://br.linkedin.com/in/cibelerusso", 'Linkedin Prof. Dr. Cibele')),
-        ),
-        tags$br(),
-        )
-    
-  ),
-  
-  fluidRow(
-    column(3, align="center", offset=2,
-           div(class='',
-            div(class='our-team',
-                div(class='picture',
-                    icon('user-circle', "fa-8x")
-                    ),
-                div(class="team-content",
-                    h3(class='name', "André Sacilotti"),
-                    h4(class='title', "Estatistica e Ciencia de Dados  - ICMC USP")
-                    ),
-                tags$ul(class='social',
-                        tags$li(tags$a(href="", icon('linkedin'))),
-                        tags$li(tags$a(href="", icon('github'))),
-                        
-                   )
-              )     
-          )
-           ),
-    column(3, align="center", offset=2,
-           div(class='',
-               div(class='our-team',
-                   div(class='picture',
-                       icon('user-circle', "fa-8x")
-                   ),
-                   div(class="team-content",
-                       h3(class='name', "Willian Franco"),
-                       h4(class='title', "Estatistica e Ciencia de Dados - ICMC USP")
-                   ),
-                   tags$ul(class='social',
-                           tags$li(tags$a(href="", icon('linkedin'))),
-                           tags$li(tags$a(href="", icon('github'))),
-                           
-                   )
-               )     
-           )
-    ),
-  ),
-  
-
-)
+                          align = "center",
+                          style = 'color:black'
+                        ),
+                        align = 'center'
+                      ),
+                      
+                      tags$h5(align = "center", style = 'color:black',
+                              div(
+                                tags$a(href = "https://uspdigital.usp.br/jupiterweb/obterDisciplina?nomdis=&sgldis=SME0803", 'Link da Disciplina SME0803')
+                              ),),
+                      tags$h5(align = "center", style = 'color:black',
+                              div(
+                                tags$a(href = "https://br.linkedin.com/in/cibelerusso", 'Linkedin Prof. Dr. Cibele')
+                              ),),
+                      tags$br(),
+                    )
+                    
+                  ),
+                  
+                  fluidRow(
+                    column(3, align = "center", offset = 2,
+                           div(
+                             class = '',
+                             div(
+                               class = 'our-team',
+                               div(class = 'picture',
+                                   icon('user-circle', "fa-8x")),
+                               div(
+                                 class = "team-content",
+                                 h3(class = 'name', "André Sacilotti"),
+                                 h4(class = 'title', "Estatistica e Ciencia de Dados  - ICMC USP")
+                               ),
+                               tags$ul(class = 'social',
+                                       tags$li(
+                                         tags$a(href = "https://www.linkedin.com/in/andre-sacilotti/", icon('linkedin'))
+                                       ),
+                                       tags$li(
+                                         tags$a(href = "https://github.com/Andre-Sacilotti", icon('github'))
+                                       ),)
+                             )
+                           )),
+                    column(3, align = "center", offset = 2,
+                           div(
+                             class = '',
+                             div(
+                               class = 'our-team',
+                               div(class = 'picture',
+                                   icon('user-circle', "fa-8x")),
+                               div(
+                                 class = "team-content",
+                                 h3(class = 'name', "Willian Franco"),
+                                 h4(class = 'title', "Estatistica e Ciencia de Dados - ICMC USP")
+                               ),
+                               tags$ul(class = 'social',
+                                       tags$li(tags$a(
+                                         href = "", icon('linkedin')
+                                       )),
+                                       tags$li(tags$a(
+                                         href = "", icon('github')
+                                       )),)
+                             )
+                           )),
+                  ),)

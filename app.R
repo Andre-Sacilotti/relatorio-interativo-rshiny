@@ -49,20 +49,75 @@ server <- function(input, output, session) {
 
 
   output$data_table <- DT::renderDataTable({
-    data <- subset(df, select = -X)
+    if (input$tipo_table == "geral"){
+      data <- subset(df, select = -X)
+      data <- subset(data, select = -Unnamed..0.1.1.1)
+      data <- subset(data, select = -Unnamed..0.1.1.1.1)
 
-
-
-    datatable(
-      data,
-      rownames = FALSE,
-      extensions = "Buttons",
-      options = list(
-        dom = "Bfrtip",
-        buttons = I("colvis"),
-        scrollX = TRUE
+      
+      
+      datatable(
+        data,
+        rownames = FALSE,
+        extensions = "Buttons",
+        options = list(
+          dom = "Bfrtip",
+          buttons = I("colvis"),
+          scrollX = TRUE
+        )
       )
-    )
+    }else if(input$tipo_table == "vit_cor") {
+      
+      dados_mortes_raça <- data.frame( Raça = c('Parda', 'Branca', 'Preta',
+                                                'NÃO INFORMADO', 'Amarela' ),
+                                       Mortes = c(3640, 2312, 648,293, 3),
+                                       
+                                       stringsAsFactors = FALSE
+                                       
+      )
+      datatable(
+        dados_mortes_raça,
+        rownames = FALSE,
+        extensions = "Buttons",
+        options = list(
+          dom = "Bfrtip",
+          scrollX = TRUE
+        )
+      )
+      
+    }else if(input$tipo_table == "vit_gen_ra") {
+      
+      dados_genero_raca <- data.frame(COR=df$COR_FOMATADO,SEXO=df$SEXO_FOMATADO)
+      
+      datatable(
+        dados_genero_raca,
+        rownames = FALSE,
+        extensions = "Buttons",
+        options = list(
+          dom = "Bfrtip",
+          scrollX = TRUE
+        )
+      )
+      
+    }else if(input$tipo_table == "ida_cor") {
+      
+      dados_idade_raça <- data.frame(IDADE=df$IDADE_PESSOA, COR_FOMATADO=df$COR)
+      
+      dados_idade_raça <- dados_idade_raça %>% filter(IDADE != 'NÃO INFORMADO'
+                                                      & IDADE != 'REGISTRADO NA PF')
+      
+      datatable(
+        dados_idade_raça,
+        rownames = FALSE,
+        extensions = "Buttons",
+        options = list(
+          dom = "Bfrtip",
+          scrollX = TRUE
+        )
+      )
+      
+    }
+    
   })
 
 
@@ -124,6 +179,18 @@ server <- function(input, output, session) {
       xaxis = list(title = "Anos"),
       yaxis = list(title = "Vitimas")
     )
+  })
+  
+  output$boxplot_idade_cor <- renderPlotly({
+    
+    dados_idade_raça <- data.frame(IDADE_PESSOA=df$IDADE_PESSOA, COR_FOMATADO=df$COR_FOMATADO)
+    
+    dados_idade_raça <- dados_idade_raça %>% filter(IDADE_PESSOA != 'NÃO INFORMADO'
+                                                    & IDADE_PESSOA != 'REGISTRADO NA PF')
+    
+
+    fig6 <- plot_ly(dados_idade_raça, y= ~IDADE_PESSOA, color = ~COR_FOMATADO,
+                    type = 'box') %>% layout(yaxis=list(title="Idade"), xaxis=list(title="Cor"))
   })
 
   output$rel_cor_vio <- renderPlot({
@@ -480,6 +547,8 @@ server <- function(input, output, session) {
         group = "densidade"
       )
   }
+  
+  
 
   deal_with_circle_marks <- function(filtered_data) {
     labels <- apply(filtered_data, 1, f)

@@ -164,6 +164,18 @@ statistics_page <- div(
   tags$hr(class = "solid"),
   tags$br(),
   h4(
+    "Boxplot da Idade das Vitimas por Cor/Raça",
+    style = "color:black",
+    align = "center"
+  ),
+  fluidRow(column(10, plotlyOutput("boxplot_idade_cor"),
+                  offset =
+                    1
+  )),
+  tags$br(),
+  tags$hr(class = "solid"),
+  tags$br(),
+  h4(
     "Coorporações Policiais Mais Violentas",
     style = "color:black",
     align = "center"

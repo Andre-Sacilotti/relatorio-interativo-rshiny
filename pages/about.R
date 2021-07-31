@@ -182,10 +182,10 @@ about_page <- div(tags$head(tags$style(HTML(css_content))),
                                ),
                                tags$ul(class = 'social',
                                        tags$li(tags$a(
-                                         href = "", icon('linkedin')
+                                         href = "http://www.linkedin.com/in/willian-franco-bernardes-390b9820a", icon('linkedin')
                                        )),
                                        tags$li(tags$a(
-                                         href = "", icon('github')
+                                         href = "https://github.com/will-franco1993", icon('github')
                                        )),)
                              )
                            )),
